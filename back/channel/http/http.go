@@ -30,12 +30,15 @@ func wsUpgradeHandler(writer http.ResponseWriter, request *http.Request) {
 		log.Println("error while upgrade")
 		return
 	}
-
 	username := request.Header.Get("username")
 	server.addConnection(wsConnection, username)
-	log.Println(server)
-	_ = wsConnection.WriteMessage(2, []byte("hi!"))
+
+	//messageType, p, err := wsConnection.ReadMessage()
+	//
+	//_ = wsConnection.WriteMessage(messageType, p)
+	//_ = wsConnection.Close()
 }
+
 func hiHandler(writer http.ResponseWriter, _ *http.Request) {
 	_, _ = writer.Write([]byte("Hi"))
 }
