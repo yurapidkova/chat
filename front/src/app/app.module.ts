@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { HeadComponent } from './head/head.component';
 import { ChatComponent } from './chat/chat.component';
 import { MessageComponent } from './chat/message/message.component';
+import { MessageTimePipe } from './message-time.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeadComponent,
     ChatComponent,
-    MessageComponent
+    MessageComponent,
+    MessageTimePipe
   ],
   imports: [
     BrowserModule,

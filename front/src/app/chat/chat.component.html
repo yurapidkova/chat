@@ -1,11 +1,13 @@
 <div class="row">
   <div class="col-md-5">
-    <input type="text" name="chat">
-    <button type="button" class="btn primary">send</button>
+    <app-message *ngFor="let message of messages" [message]="message"></app-message>
   </div>
 </div>
 <div class="row">
   <div class="col-md-5">
-    <app-message *ngFor="let message of messages" [message]="message"></app-message>
+    <label>
+      <input type="text" name="chat" #messageInput>
+    </label>
+    <button type="button" class="btn btn-primary" (click)="onAddMessage(messageInput)">send</button>
   </div>
 </div>

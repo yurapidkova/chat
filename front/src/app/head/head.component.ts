@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {UserService} from '../user.service';
 
 @Component({
   selector: 'app-head',
@@ -9,21 +10,12 @@ export class HeadComponent implements OnInit {
 
   username: string;
 
-  constructor() {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.username = this.makeId(9);
+    this.username = this.userService.username;
   }
 
-  private makeId(length): string {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
 
 }

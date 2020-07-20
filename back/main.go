@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	http2 "github.com/panytsch/chat/back/channel/http"
+)
 
 func main() {
-	fmt.Println("Hi there.!")
+	http2.RunServer()
 }
