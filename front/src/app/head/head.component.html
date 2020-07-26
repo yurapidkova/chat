@@ -1,2 +1,7 @@
 <h1>This Is Chat</h1>
-<input type="text" disabled [value]="username" />
+<label>
+  Username
+  <input type="text" [value]="username" #usernameEl/>
+</label>
+<button class="btn btn-primary" (click)="onUsernameChanged(usernameEl.value)">Set Username</button>
+

@@ -7,7 +7,6 @@ import {Subscription} from 'rxjs';
 import {WebsocketService} from '../websocket.service';
 
 
-
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -17,6 +16,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   messages: MessageModel[];
+  username: string;
 
   constructor(private messagesService: MessagesService,
               private websocketService: WebsocketService,
@@ -25,10 +25,16 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.messages = this.messagesService.messages;
+    this.username = this.userService.username;
     this.subscriptions.push(
-      this.messagesService.newMessageReceived.subscribe(message => {
-        this.messages.push(message);
-      })
+      this.messagesService.newMessageReceived
+        .subscribe(message => {
+          this.messages.push(message);
+        }),
+      this.userService.userHasBeenChanged
+        .subscribe(username => {
+          this.username = username;
+        })
     );
   }
 
@@ -37,7 +43,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   public onAddMessage(messageElement: HTMLInputElement): void {
-    const message = new MessageModel(messageElement.value, this.userService.username, Date.now());
+    const message = new MessageModel(messageElement.value, this.username, Date.now());
     this.websocketService.sendMessage(message);
     messageElement.value = '';
   }
