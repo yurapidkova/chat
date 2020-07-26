@@ -3,23 +3,16 @@ package http
 import "encoding/json"
 
 type response struct {
-	content  []byte
-	username string
-	time     int64
-}
-
-type jsonResponse struct {
-	Content  string
-	Username string
-	Time     int64
+	Content  []byte `json:"content"`
+	Username string `json:"username"`
+	Time     int64  `json:"time"`
 }
 
 func newResponse(content []byte, username string, time int64) *response {
-	return &response{content: content, username: username, time: time}
+	return &response{Content: content, Username: username, Time: time}
 }
 
 func (r *response) toBytes() []byte {
-	jr := jsonResponse{Content: string(r.content), Username: r.username, Time: r.time}
-	respB, _ := json.Marshal(jr)
+	respB, _ := json.Marshal(r)
 	return respB
 }

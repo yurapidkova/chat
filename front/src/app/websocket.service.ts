@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {MessagesService} from './messages.service';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from './user.service';
+import {MessageModel} from './chat/message/message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,12 @@ export class WebsocketService {
     const wsUrl = `ws://${window.location.hostname}:8080${this.wsRelativeUrl}?token=${token}&username=${this.userService.username}`;
     this.wsConnection = new WebSocket(wsUrl);
     this.wsConnection.onopen = () => this.wsConnection.send(JSON.stringify({data: 5}));
+    this.wsConnection.onmessage = this.handleWebSocketMessage;
   }
+
+  private handleWebSocketMessage = (event: MessageEvent) => {
+    const message = MessageModel.parse(event.data);
+    this.messagesService.newMessageReceived.next(message);
+  }
+
 }

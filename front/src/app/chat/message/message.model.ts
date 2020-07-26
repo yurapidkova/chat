@@ -6,6 +6,11 @@ export class MessageModel {
   ) {
   }
 
+  public static parse(data: string): MessageModel {
+    const json = JSON.parse(data);
+    return new MessageModel(json.content, json.username, json.time);
+  }
+
   get content(): string {
     return this._content;
   }

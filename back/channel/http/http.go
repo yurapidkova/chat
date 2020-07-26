@@ -30,7 +30,7 @@ func wsUpgradeHandler(writer http.ResponseWriter, request *http.Request) {
 	token, username := request.URL.Query().Get("token"), request.URL.Query().Get("username")
 
 	if token == "" || username == "" {
-		log.Println("Empty token || username ")
+		log.Println("Empty token || Username ")
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
