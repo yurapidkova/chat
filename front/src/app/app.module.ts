@@ -7,6 +7,7 @@ import { HeadComponent } from './head/head.component';
 import { ChatComponent } from './chat/chat.component';
 import { MessageComponent } from './chat/message/message.component';
 import { MessageTimePipe } from './message-time.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MessageTimePipe } from './message-time.pipe';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],

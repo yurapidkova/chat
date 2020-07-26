@@ -72,12 +72,40 @@ func Test_tokenCollection_saveToken(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tt.to.saveToken(tt.args.token)
-			t.Log(tt.to)
+			err := tt.to.saveToken(tt.args.token)
+
+			if err != nil {
+				t.Fail()
+			}
 			if len(tt.to) != 3 {
 				t.Fail()
 			}
 			if tt.to[2] != tt.args.token {
+				t.Fail()
+			}
+		})
+	}
+}
+
+func Test_tokenCollection_saveToken_error(t *testing.T) {
+	type args struct {
+		token string
+	}
+	tests := []struct {
+		name string
+		to   tokenCollection
+		args args
+	}{
+		struct {
+			name string
+			to   tokenCollection
+			args args
+		}{name: "i want to add 'b' and receive error", to: tokenCollection{"a", "b"}, args: struct{ token string }{token: "b"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := tt.to.saveToken(tt.args.token)
+			if err != NotUniqueToken {
 				t.Fail()
 			}
 		})

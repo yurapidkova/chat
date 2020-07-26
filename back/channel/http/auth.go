@@ -17,6 +17,11 @@ type authResponse struct {
 }
 
 func authHandler(writer http.ResponseWriter, httpRequest *http.Request) {
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+	writer.Header().Set("Access-Control-Allow-Headers", "*")
+	if httpRequest.Method == http.MethodOptions {
+		return
+	}
 	req := &authRequest{}
 	if err := json.NewDecoder(httpRequest.Body).Decode(req); err != nil {
 		log.Println("can't read body of request")
@@ -25,6 +30,16 @@ func authHandler(writer http.ResponseWriter, httpRequest *http.Request) {
 	}
 
 	token := tokens.createHash(req.Name)
-	tokens.saveToken(token)
+	if err := tokens.saveToken(token); err != nil {
+		log.Println(err.Error())
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
+	res := authResponse{
+		Token: token,
+	}
+	jsonned, _ := json.Marshal(res)
+	writer.WriteHeader(http.StatusCreated)
+	_, _ = writer.Write(jsonned)
 }

@@ -13,12 +13,14 @@ export class WebsocketService {
 
   constructor(private messagesService: MessagesService,
               private httpClient: HttpClient) {
-    const wsUrl = `ws://${window.location.hostname}:8080${this.wsRelativeUrl}`;
-    this.connect(wsUrl);
+    this.authorize('KURVA');
+    // const wsUrl = `ws://${window.location.hostname}:8080${this.wsRelativeUrl}`;
+    // this.connect(wsUrl);
   }
 
   public authorize(name: string): void {
-    this.httpClient.post(this.authorizeRelativeUrl, {name}).subscribe();
+    const wsUrl = `${window.location.protocol}//${window.location.hostname}:8080${this.authorizeRelativeUrl}`;
+    this.httpClient.post(wsUrl, {name}).subscribe(console.log);
   }
 
   public connect(wsUrl: string): void {
