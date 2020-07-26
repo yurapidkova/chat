@@ -22,6 +22,7 @@ func RunServer() {
 func collectHandlers() {
 	http.HandleFunc("/hi", hiHandler)
 	http.HandleFunc("/api/v1/ws/chat/all", wsUpgradeHandler)
+	http.HandleFunc("/api/v1/ws/auth", authHandler)
 }
 
 func wsUpgradeHandler(writer http.ResponseWriter, request *http.Request) {

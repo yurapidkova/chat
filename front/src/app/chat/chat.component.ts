@@ -4,6 +4,9 @@ import {MessageModel} from './message/message.model';
 import {MessagesService} from '../messages.service';
 import {UserService} from '../user.service';
 import {Subscription} from 'rxjs';
+import {WebsocketService} from '../websocket.service';
+
+
 
 @Component({
   selector: 'app-chat',
@@ -16,6 +19,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   messages: MessageModel[];
 
   constructor(private messagesService: MessagesService,
+              private websocketService: WebsocketService,
               private userService: UserService) {
   }
 
