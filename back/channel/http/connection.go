@@ -27,6 +27,7 @@ func (ws *wsConnection) readAndWrite() {
 		if err != nil {
 			log.Println(ws.username, "Died")
 			_ = ws.connection.Close()
+			break
 		}
 
 		server.sendForEveryone(r, messageType)
