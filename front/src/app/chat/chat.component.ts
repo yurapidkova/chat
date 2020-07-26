@@ -38,7 +38,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   public onAddMessage(messageElement: HTMLInputElement): void {
     const message = new MessageModel(messageElement.value, this.userService.username, Date.now());
-    this.messagesService.addMessage(message);
+    this.websocketService.sendMessage(message);
     messageElement.value = '';
   }
 }

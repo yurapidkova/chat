@@ -20,6 +20,10 @@ export class WebsocketService {
     this.authorize();
   }
 
+  public sendMessage(message: MessageModel): void {
+    this.wsConnection.send(JSON.stringify(message));
+  }
+
   public authorize(): void {
     const wsUrl = `${window.location.protocol}//${window.location.hostname}:8080${this.authorizeRelativeUrl}`;
     this.httpClient.post(wsUrl, {name: this.userService.username})
@@ -29,14 +33,12 @@ export class WebsocketService {
   public connect(token: string): void {
     const wsUrl = `ws://${window.location.hostname}:8080${this.wsRelativeUrl}?token=${token}&username=${this.userService.username}`;
     this.wsConnection = new WebSocket(wsUrl);
-    const mess = new MessageModel('I\'m idiot', this.userService.username, Date.now());
-    this.wsConnection.onopen = () => this.wsConnection.send(JSON.stringify(mess));
     this.wsConnection.onmessage = this.handleWebSocketMessage;
   }
 
   private handleWebSocketMessage = (event: MessageEvent) => {
     const message = MessageModel.parse(event.data);
-    this.messagesService.newMessageReceived.next(message);
+    this.messagesService.addMessage(message);
   }
 
 }

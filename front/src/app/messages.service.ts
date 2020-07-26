@@ -11,11 +11,6 @@ export class MessagesService {
   newMessageReceived = new Subject<MessageModel>();
 
   constructor() {
-    // this._messages = [
-    //   new MessageModel('fdjhgjdf', 'slkghkfdg', Date.now()),
-    //   new MessageModel('fdjhgjdf', 'slkghkfdg', Date.now()),
-    //   new MessageModel('fdjhgjdf', 'slkghkfdg', Date.now()),
-    // ];
   }
 
   public addMessage(message: MessageModel): void {
