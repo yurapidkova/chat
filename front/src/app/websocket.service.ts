@@ -29,7 +29,8 @@ export class WebsocketService {
   public connect(token: string): void {
     const wsUrl = `ws://${window.location.hostname}:8080${this.wsRelativeUrl}?token=${token}&username=${this.userService.username}`;
     this.wsConnection = new WebSocket(wsUrl);
-    this.wsConnection.onopen = () => this.wsConnection.send(JSON.stringify({data: 5}));
+    const mess = new MessageModel('I\'m idiot', this.userService.username, Date.now());
+    this.wsConnection.onopen = () => this.wsConnection.send(JSON.stringify(mess));
     this.wsConnection.onmessage = this.handleWebSocketMessage;
   }
 

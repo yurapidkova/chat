@@ -3,7 +3,6 @@ package http
 import (
 	"github.com/gorilla/websocket"
 	"log"
-	"time"
 )
 
 type wsConnection struct {
@@ -22,14 +21,13 @@ func (ws *wsConnection) readAndWrite() {
 
 		messageType, p, err := ws.connection.ReadMessage()
 
-		r := newResponse(p, ws.username, time.Now().Unix())
 		if err != nil {
 			log.Println(ws.username, "Died")
 			_ = ws.connection.Close()
 			break
 		}
 
-		server.sendForEveryone(r, messageType)
+		server.sendForEveryone(p, messageType)
 	}
 }
 

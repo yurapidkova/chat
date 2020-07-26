@@ -22,4 +22,12 @@ export class MessageModel {
   get time(): number {
     return this._time;
   }
+
+  public toJSON() {
+    return {
+      content: this._content,
+      time: this._time,
+      username: this._user
+    };
+  }
 }

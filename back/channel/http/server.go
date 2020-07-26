@@ -18,10 +18,10 @@ func (s *wsServer) addConnection(connection *websocket.Conn, username string) {
 	wsConn.handle()
 }
 
-func (s *wsServer) sendForEveryone(r *response, messageType int) {
+func (s *wsServer) sendForEveryone(message []byte, messageType int) {
 
 	for _, c := range s.connections {
-		_ = c.connection.WriteMessage(messageType, r.toBytes())
+		_ = c.connection.WriteMessage(messageType, message)
 	}
 
 }
