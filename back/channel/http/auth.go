@@ -16,9 +16,15 @@ type authResponse struct {
 	Token string `json:"token"`
 }
 
+func addCORSHeaders(writer *http.ResponseWriter) {
+	(*writer).Header().Set("Access-Control-Allow-Origin", "*")
+	(*writer).Header().Set("Access-Control-Allow-Headers", "*")
+}
+
 func authHandler(writer http.ResponseWriter, httpRequest *http.Request) {
-	writer.Header().Set("Access-Control-Allow-Origin", "*")
-	writer.Header().Set("Access-Control-Allow-Headers", "*")
+
+	addCORSHeaders(&writer)
+
 	if httpRequest.Method == http.MethodOptions {
 		return
 	}

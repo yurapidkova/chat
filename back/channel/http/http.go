@@ -26,12 +26,22 @@ func collectHandlers() {
 }
 
 func wsUpgradeHandler(writer http.ResponseWriter, request *http.Request) {
+
+	token, username := request.URL.Query().Get("token"), request.URL.Query().Get("username")
+
+	if token == "" || username == "" {
+		log.Println("Empty token || username ")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	tokens.removeToken(token)
+
 	wsConnection, err := wsUpgrader.Upgrade(writer, request, nil)
 	if err != nil {
 		log.Println("error while upgrade")
 		return
 	}
-	username := request.Header.Get("username")
+
 	server.addConnection(wsConnection, username)
 
 	//messageType, p, err := wsConnection.ReadMessage()

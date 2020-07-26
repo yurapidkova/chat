@@ -1,7 +1,6 @@
 package http
 
 import (
-	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"time"
@@ -22,7 +21,7 @@ func (ws *wsConnection) readAndWrite() {
 	for {
 
 		messageType, p, err := ws.connection.ReadMessage()
-		fmt.Println("test")
+
 		r := newResponse(p, ws.username, time.Now().Unix())
 		if err != nil {
 			log.Println(ws.username, "Died")
